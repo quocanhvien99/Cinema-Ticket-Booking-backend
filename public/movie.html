@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+			integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+			crossorigin="anonymous"
+		/>
+	</head>
+	<body>
+		<div class="container">
+			<h2 class="mb-5" style="text-align: center">Đăng Phim</h2>
+			<form>
+				<div class="row mb-2">
+					<label for="name" class="col-2 col-xl-1">Tên phim:</label>
+					<input type="text" id="name" class="col" />
+				</div>
+				<div class="row mb-2">
+					<label for="language" class="col-2 col-xl-1">Ngôn ngữ:</label>
+					<input type="text" id="language" class="col" />
+				</div>
+				<div class="row mb-2">
+					<label for="genre" class="col-2 col-xl-1">Thể loại:</label>
+					<input
+						type="text"
+						id="genre"
+						class="col"
+						placeholder="Cách nhau bởi dấu (,)"
+					/>
+				</div>
+				<div class="row mb-2">
+					<label for="actor" class="col-2 col-xl-1">Diễn viên:</label>
+					<input
+						type="text"
+						id="actor"
+						class="col"
+						placeholder="Cách nhau bởi dấu (,)"
+					/>
+				</div>
+				<div class="row mb-2">
+					<label for="time" class="col-2 col-xl-1">Thời lượng:</label>
+					<input
+						type="number"
+						id="time"
+						class="col"
+						placeholder="Số phút"
+						min="1"
+					/>
+				</div>
+				<div class="row mb-2">
+					<label for="releaseDate" class="col-2 col-xl-1">Khởi chiếu:</label>
+					<input type="date" id="releaseDate" class="col" />
+				</div>
+				<div class="row mb-2">
+					<label for="tomatometer" class="col-2 col-xl-1">Điểm:</label>
+					<input
+						type="number"
+						id="tomatometer"
+						class="col"
+						placeholder="tomatometer"
+					/>
+				</div>
+				<div class="row mb-2">
+					<div class="col-2 col-xl-1"></div>
+					<input
+						type="number"
+						id="audience"
+						class="col"
+						placeholder="audience"
+					/>
+				</div>
+				<div class="row mb-2">
+					<label for="trailer" class="col-2 col-xl-1">Trailer:</label>
+					<input
+						type="url"
+						id="trailer"
+						class="col"
+						placeholder="Youtube URL"
+					/>
+				</div>
+				<div class="row mb-2">
+					<label for="poster" class="col-2 col-xl-1">Poster</label>
+					<input type="url" id="poster" class="col" placeholder="Image URL" />
+				</div>
+				<div class="row mb-2">
+					<label for="summery" class="col-2 col-xl-1">Nội dung:</label>
+					<input type="text" id="summery" class="col" />
+				</div>
+				<div class="row mt-5">
+					<button
+						class="btn btn-primary mx-auto col-2"
+						onclick="submitHandle(event)"
+					>
+						Tạo mới
+					</button>
+				</div>
+			</form>
+		</div>
+
+		<script>
+			const apiUrl = '/api/movies/';
+
+			const name = document.getElementById('name');
+			const language = document.getElementById('language');
+			const genre = document.getElementById('genre');
+			const actor = document.getElementById('actor');
+			const time = document.getElementById('time');
+			const releaseDate = document.getElementById('releaseDate');
+			const tomatometer = document.getElementById('tomatometer');
+			const audience = document.getElementById('audience');
+			const trailer = document.getElementById('trailer');
+			const poster = document.getElementById('poster');
+			const summery = document.getElementById('summery');
+
+			const submitHandle = (e) => {
+				e.preventDefault();
+				const data = {
+					name: name.value.toLowerCase(),
+					language: language.value.toLowerCase(),
+					genre: genre.value.toLowerCase().trim().replace(', ', ',').split(','),
+					actor: actor.value.toLowerCase().trim().replace(', ', ',').split(','),
+					time: time.value,
+					releaseDate: releaseDate.value,
+					score: {
+						tomatometer: tomatometer.value,
+						audience: audience.value,
+					},
+					trailer: trailer.value,
+					poster: poster.value,
+					summery: summery.value.toLowerCase(),
+				};
+				console.log(data);
+
+				fetch(apiUrl, {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify(data),
+				});
+			};
+		</script>
+	</body>
+</html>

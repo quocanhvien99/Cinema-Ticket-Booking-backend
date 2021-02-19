@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+			integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+			crossorigin="anonymous"
+		/>
+	</head>
+	<body>
+		<div class="container">
+			<h2 class="mb-5" style="text-align: center">Lịch Chiếu</h2>
+			<form>
+				<div class="row mb-2">
+					<label for="room" class="col-2 col-xl-1">Phòng số:</label>
+					<input type="number" id="room" class="col" />
+				</div>
+				<div class="row mb-2">
+					<label for="movieId" class="col-2 col-xl-1">Movie ID:</label>
+					<input type="text" id="movieId" class="col" />
+				</div>
+				<div class="row mb-2">
+					<label for="start" class="col-2 col-xl-1">Giờ chiếu:</label>
+					<input type="text" id="start" class="col" />
+				</div>
+				<div class="row mt-5">
+					<button
+						class="btn btn-primary mx-auto col-2"
+						onclick="submitHandle(event)"
+					>
+						Tạo mới
+					</button>
+				</div>
+			</form>
+		</div>
+
+		<script>
+			const apiUrl = '/api/schedule/';
+
+			const room = document.getElementById('room');
+			const movieId = document.getElementById('movieId');
+			const start = document.getElementById('start');
+
+			const submitHandle = (e) => {
+				e.preventDefault();
+				const data = {
+					room: room.value,
+					movieId: movieId.value,
+					start: start.value,
+				};
+				console.log(data);
+
+				fetch(apiUrl, {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify(data),
+				});
+			};
+		</script>
+	</body>
+</html>
